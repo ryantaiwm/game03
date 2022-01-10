@@ -27,7 +27,7 @@ class Horse:
 
 HorseList = []
 for i in range (1,15):
-    HorseList.append(Horse(str(i),20,160,1200))
+    HorseList.append(Horse(str(i),20,160,1600))
 
 KeepGoing = True
 j = 0
