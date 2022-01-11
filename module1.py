@@ -1,13 +1,16 @@
 import random
 
 class Horse:
-    def __init__(self, name, sp, hp, dist, rank=0, time=0):
+    def __init__(self, id, name, sp, hp, dist, rank=0, time=0):
+      self.id = id
       self.name = name
       self.sp = sp
       self.hp = hp
       self.dist = dist
       self.rank = rank
       self.time = time
+      self.score = 50
+      self.rid = 0
 
     def Ready(self):
       print(self.name + " "+str(self.rank) + " Time: " + str(self.time))
@@ -25,9 +28,52 @@ class Horse:
             self.time = time
 
 
+class fixture:
+    def __init__ (self, rid):
+        self.rid = rid
+        self.dist = random.randint(1,8)*400
+        self.score = random.randint(0,100)
+        self.racelist = []
+
+    def check(self, hid, score):
+        # if full return 0
+        if len(self.racelist) >= 14:
+            return 0
+        if self.score > score:
+            return 0
+        # if already existing return Rid    
+        for h in self.racelist:
+            if h == hid:
+                return self.rid
+        # otherwise app hid to racelist and reture Rid        
+        self.racelist.append(hid)
+        return self.rid
+
+
+AllHorseList = []
+for i in range (1,1000):
+    AllHorseList.append(Horse(i,str(i),random.randint(3,7),100,1000))
+
+FixtureList = []
+for i in range(1,10):
+    FixtureList.append(fixture(i))
+for f in FixtureList:
+    for h in AllHorseList:
+        if h.rid <= 0:
+            rid = f.check(h.id, h.score)
+            if rid != 0:
+                h.rid = rid
+    print("Rid " + str(f.rid) +" "+str(f.score) + " " +str(len(f.racelist)))
+    print(f.racelist)
+    
+
+
+
+
+
 HorseList = []
 for i in range (1,15):
-    HorseList.append(Horse(str(i),20,160,2200))
+    HorseList.append(Horse(i,str(i),20,160,2200)) 
 
 KeepGoing = True
 j = 0
