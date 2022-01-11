@@ -49,52 +49,61 @@ class fixture:
         self.racelist.append(hid)
         return self.rid
 
+def SystemInit():
+    AllHorseList = []
+    for i in range (1,1000):
+        AllHorseList.append(Horse(i,str(i),random.randint(3,7),100,1000))
 
-AllHorseList = []
-for i in range (1,1000):
-    AllHorseList.append(Horse(i,str(i),random.randint(3,7),100,1000))
-
-FixtureList = []
-for i in range(1,10):
-    FixtureList.append(fixture(i))
-for f in FixtureList:
-    for h in AllHorseList:
-        if h.rid <= 0:
-            rid = f.check(h.id, h.score)
-            if rid != 0:
-                h.rid = rid
-    print("Rid " + str(f.rid) +" Dist "+str(f.dist)+" Score "+str(f.score) + " " +str(len(f.racelist)))
-    print(f.racelist)
+    FixtureList = []
+    for i in range(1,10):
+        FixtureList.append(fixture(i))
+    for f in FixtureList:
+        for h in AllHorseList:
+            if h.rid <= 0:
+                rid = f.check(h.id, h.score)
+                if rid != 0:
+                    h.rid = rid
+        print("Rid " + str(f.rid) +" Dist "+str(f.dist)+" Score "+str(f.score) + " " +str(len(f.racelist)))
+        print(f.racelist)
     
 
+def racing():
+    HorseList = []
+    for i in range (1,15):
+        HorseList.append(Horse(i,str(i),20,160,2200)) 
 
-
-
-
-HorseList = []
-for i in range (1,15):
-    HorseList.append(Horse(i,str(i),20,160,2200)) 
-
-KeepGoing = True
-j = 0
-finished = 0
-while KeepGoing:
-    j += 1
+    KeepGoing = True
+    j = 0
+    finished = 0
+    while KeepGoing:
+        j += 1
     #print(j)
     #for y in HorseList:
     #    y.Ready()
 
-    for x in HorseList:
-        x.Update()
-        if x.dist <= 0:
-            if x.rank == 0:
-                finished += 1
-                x.Finish(finished, j)
+        for x in HorseList:
+            x.Update()
+            if x.dist <= 0:
+                if x.rank == 0:
+                    finished += 1
+                    x.Finish(finished, j)
             
-        if finished >= 14:
-            KeepGoing = False
+            if finished >= 14:
+                KeepGoing = False
 
-# end of racing
-for x in HorseList:
-    x.Ready()
+        # end of racing
+        for x in HorseList:
+            x.Ready()
 
+SystemExit = False
+while SystemExit == False:
+    print("1 - System Init")
+    print("2 - Racing")
+    print("3 - Exit")
+    choiceitem = int(input('option : '))
+    if choiceitem == 1:
+        SystemInit()
+    if choiceitem == 2:
+        racing()
+    if choiceitem == 3:
+        exit()
