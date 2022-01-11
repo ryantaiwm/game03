@@ -31,7 +31,7 @@ class Horse:
 class fixture:
     def __init__ (self, rid):
         self.rid = rid
-        self.dist = random.randint(1,8)*400
+        self.dist = random.randint(1,5)*400 + 600
         self.score = random.randint(0,100)
         self.racelist = []
 
@@ -63,7 +63,7 @@ for f in FixtureList:
             rid = f.check(h.id, h.score)
             if rid != 0:
                 h.rid = rid
-    print("Rid " + str(f.rid) +" "+str(f.score) + " " +str(len(f.racelist)))
+    print("Rid " + str(f.rid) +" Dist "+str(f.dist)+" Score "+str(f.score) + " " +str(len(f.racelist)))
     print(f.racelist)
     
 
