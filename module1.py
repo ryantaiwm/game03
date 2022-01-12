@@ -97,6 +97,7 @@ def racing():
 
 SystemExit = False
 while SystemExit == False:
+    print("Simulation 2022")
     print("1 - System Init")
     print("2 - Racing")
     print("3 - Exit")
