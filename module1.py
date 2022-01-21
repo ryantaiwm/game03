@@ -1,6 +1,10 @@
 import random
 
+AllHorseList = []
+FixtureList = []
+
 class Horse:
+
     def __init__(self, id, name, sp, hp, dist, rank=0, time=0):
       self.id = id
       self.name = name
@@ -13,7 +17,7 @@ class Horse:
       self.rid = 0
 
     def Ready(self):
-      print(self.name + " "+str(self.rank) + " Time: " + str(self.time))
+      print(self.name +"score: "+ str(self.score) + " Rank: "+str(self.rank) + " Time: " + str(self.time))
 
     def SetDist(self, dist):
         self.dist = dist
@@ -26,13 +30,23 @@ class Horse:
         if self.rank == 0:
             self.rank = rank
             self.time = time
+            if self.rank == 1: self.score += 3
+            if self.rank == 2: self.score += 2
+            if self.rank == 3: self.score += 1
+            if self.rank == 14: self.score -= 3
+            if self.rank == 13: self.score -= 2
+            if self.rank == 12: self.score -= 1
+            self.rid = 0
 
 
 class fixture:
     def __init__ (self, rid):
         self.rid = rid
         self.dist = random.randint(1,5)*400 + 600
-        self.score = random.randint(0,100)
+        if rid <= 11:
+            self.score = 50
+        else:
+            self.score = random.randint(30,70)
         self.racelist = []
 
     def check(self, hid, score):
@@ -50,12 +64,12 @@ class fixture:
         return self.rid
 
 def SystemInit():
-    AllHorseList = []
-    for i in range (1,1000):
+    #AllHorseList = []
+    for i in range (1,150):
         AllHorseList.append(Horse(i,str(i),random.randint(3,7),100,1000))
 
-    FixtureList = []
-    for i in range(1,10):
+
+    for i in range(1,14):
         FixtureList.append(fixture(i))
     for f in FixtureList:
         for h in AllHorseList:
@@ -67,20 +81,31 @@ def SystemInit():
         print(f.racelist)
     
 
-def racing():
+def racing(RaceNum):
     HorseList = []
-    for i in range (1,15):
-        HorseList.append(Horse(i,str(i),20,160,2200)) 
+
+    #f = FixtureList[1]
+    #lengthOfFixture = len(f.racelist)
+    #x = 0
+    #for fH in (0, lengthOfFixture):
+        
+    #    i = f.racelist[x]
+    #    x += 1
+   
+    #    H = AllHorseList[i]
+    #    HorseList.append(Horse(H.id,str(H.name),H.sp,H.hp,H.dist))
+
+    for i in range (0,14):
+        HorseList.append(Horse(i,str(i),20,200,1000))
+
+
+    #print HorseList
 
     KeepGoing = True
     j = 0
     finished = 0
     while KeepGoing:
         j += 1
-    #print(j)
-    #for y in HorseList:
-    #    y.Ready()
-
         for x in HorseList:
             x.Update()
             if x.dist <= 0:
@@ -91,20 +116,31 @@ def racing():
             if finished >= 14:
                 KeepGoing = False
 
-        # end of racing
-        for x in HorseList:
-            x.Ready()
+    # end of racing
+    print("End of Racing")
+    for x in HorseList:
+        x.Ready()
+        AllHorseList[x.id].score += (x.score - 50)
+        
+def printrecord():
+    for x in range(0, 14):
+        AllHorseList[x].Ready()
 
 SystemExit = False
+RaceNum = 0
 while SystemExit == False:
     print("Simulation 2022")
     print("1 - System Init")
     print("2 - Racing")
     print("3 - Exit")
+    print("4 - print records")
     choiceitem = int(input('option : '))
     if choiceitem == 1:
         SystemInit()
     if choiceitem == 2:
-        racing()
+        racing(RaceNum)
+        RaceNum += 1
     if choiceitem == 3:
         exit()
+    if choiceitem == 4:
+        printrecord()

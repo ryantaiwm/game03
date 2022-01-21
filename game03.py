@@ -1,9 +1,6 @@
 import pygame,sys,random
-<<<<<<< HEAD
 # Ryan comment
-=======
 #123
->>>>>>> 1d001ff0dd47ede3db5ef2bc892f8da3365f5a75
 class Horse:
    def __init__(self, name, sp, hp):
       self.name = name
